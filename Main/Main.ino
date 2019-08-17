@@ -19,6 +19,7 @@ boolean isDebug = false;
 void setup(){
   Serial.begin(9600);
   delay(300);
+  displayInit();
   initTime();
   relayInit();
   initSwimmers();
@@ -26,7 +27,7 @@ void setup(){
 }
 
 void loop(){
-  checkCommand();
+//  checkCommand();
   if (isDebug) {
     return;
   }
@@ -37,6 +38,9 @@ void loop(){
   boolean highLevel = isHighLevel();
   float currTemp0 = detectTemp(0);
   float currTemp1 = detectTemp(1);
+  displayLCDClear();
+  displayLCD("Теплица 1:" + String(currTemp0), 0, 0);
+  displayLCD("Теплица 2:" + String(currTemp1), 1, 0);
   checkTimeWork(LENGTH_MOTOR_WORK);
   
   Serial.print("Текущая температура 1 теплицы: "); Serial.println(currTemp0);
